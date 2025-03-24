@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  nominatim:
+    image: mediagis/nominatim:4.5
+    container_name: nominatim
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - PBF_URL=${PBF_URL}
+      - THREADS=${THREADS}
+      - IMPORT_STYLE=${IMPORT_STYLE}
+      - IMPORT_US_POSTCODES=${IMPORT_US_POSTCODES}
+      - NOMINATIM_PASSWORD=${NOMINATIM_PASSWORD}
+    shm_size: "32g"
+    volumes:
+      - nominatim-data:/var/lib/postgresql/14/main
+      - nominatim-flatnode:/nominatim/flatnode
+
+volumes:
+  nominatim-data:
+  nominatim-flatnode:
